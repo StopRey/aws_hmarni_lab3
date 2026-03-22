@@ -1,4 +1,4 @@
-# Глобальні теги [cite: 1206]
+# Глобальні теги 
 locals {
   common_tags = {
     Owner   = var.prefix
@@ -7,7 +7,7 @@ locals {
   }
 }
 
-# Мережа та підмережі [cite: 1213, 1220]
+# Мережа та підмережі 
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
@@ -23,7 +23,7 @@ resource "aws_subnet" "subnet_a" {
   tags                    = merge(local.common_tags, { Name = "${var.prefix}-subnet-a" })
 }
 
-# Шлюз та маршрути [cite: 1241, 1245]
+# Шлюз та маршрути 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
   tags   = merge(local.common_tags, { Name = "${var.prefix}-igw" })
@@ -42,7 +42,7 @@ resource "aws_route_table_association" "a" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-# Безпека: Дозволяємо SSH тільки тобі та Web для всіх [cite: 1267, 1279]
+# Безпека: Дозволяємо SSH тільки тобі та Web для всіх
 data "http" "my_ip" { url = "https://ipv4.icanhazip.com" }
 
 resource "aws_security_group" "web_sg" {
